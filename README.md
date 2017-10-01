@@ -1,10 +1,11 @@
-Symfony Demo Application
-========================
+Symfony/Survos Demo Application
+===============================
 
 The "Symfony Demo Application" is a reference application created to show how
 to develop Symfony applications following the recommended best practices.
 
 [![Build Status](https://travis-ci.org/symfony/symfony-demo.svg?branch=master)](https://travis-ci.org/symfony/symfony-demo)
+[![Coverage Status](https://coveralls.io/repos/github/survos/symfony-demo/badge.svg?branch=master)](https://coveralls.io/github/survos/symfony-demo?branch=master)
 
 Requirements
 ------------
