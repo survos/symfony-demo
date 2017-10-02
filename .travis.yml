@@ -37,3 +37,6 @@ script:
   - ./bin/console security:check --end-point=http://security.sensiolabs.org/check_lock
   # this checks that the composer.json and composer.lock files are valid
   - composer validate --strict
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

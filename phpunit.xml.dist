@@ -36,4 +36,7 @@
               -->
         <listener class="\DAMA\DoctrineTestBundle\PHPUnit\LegacyPHPUnitListener" />
     </listeners>
+    <logging>
+        <log type="coverage-clover" target="./coverage.xml"/>
+    </logging>
 </phpunit>
