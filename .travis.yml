@@ -28,4 +28,5 @@ install:
   - ./vendor/bin/codecept build
 
 script:
+  - ./bin/console server:start
   - ./vendor/bin/codecept run
