@@ -25,8 +25,8 @@ before_install:
 
 install:
   - composer install
+  - ./bin/console server:start
   - ./vendor/bin/codecept build
 
 script:
-  - ./bin/console server:start
   - ./vendor/bin/codecept run
