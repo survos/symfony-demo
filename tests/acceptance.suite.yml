@@ -4,9 +4,13 @@
 # Perform tests in browser using the WebDriver or PhpBrowser.
 # If you need both WebDriver and PHPBrowser tests - create a separate suite.
 
-actor: AcceptanceTester
+class_name: AcceptanceTester
 modules:
     enabled:
+        # for real UI testing should be replaced with WebDriver
         - PhpBrowser:
-            url: http://localhost:8000/
+            url: 'http://127.0.0.1:8000'
+            headers:
+                env: test
         - \App\Tests\Helper\Acceptance
+

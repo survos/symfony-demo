@@ -14,4 +14,6 @@ modules:
         - Doctrine2:
             depends: Symfony
             cleanup: true
+        - Asserts
+        - Sequence
         - \App\Tests\Helper\Functional
