@@ -12,6 +12,7 @@
 namespace App\Repository;
 
 use App\Entity\Post;
+use App\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query;
@@ -35,21 +36,22 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    public function findLatest(int $page = 1): Pagerfanta
+    public function findLatest(int $page = 1, Tag $tag = null): Pagerfanta
     {
-        $query = $this->getEntityManager()
-            ->createQuery('
-                SELECT p, a, t
-                FROM App:Post p
-                JOIN p.author a
-                LEFT JOIN p.tags t
-                WHERE p.publishedAt <= :now
-                ORDER BY p.publishedAt DESC
-            ')
-            ->setParameter('now', new \DateTime())
-        ;
+        $qb = $this->createQueryBuilder('p')
+            ->addSelect('a', 't')
+            ->innerJoin('p.author', 'a')
+            ->leftJoin('p.tags', 't')
+            ->where('p.publishedAt <= :now')
+            ->orderBy('p.publishedAt', 'DESC')
+            ->setParameter('now', new \DateTime());
 
-        return $this->createPaginator($query, $page);
+        if (null !== $tag) {
+            $qb->andWhere(':tag MEMBER OF p.tags')
+                ->setParameter('tag', $tag);
+        }
+
+        return $this->createPaginator($qb->getQuery(), $page);
     }
 
     private function createPaginator(Query $query, int $page): Pagerfanta
@@ -69,7 +71,7 @@ class PostRepository extends ServiceEntityRepository
         $query = $this->sanitizeSearchQuery($rawQuery);
         $searchTerms = $this->extractSearchTerms($query);
 
-        if (0 === count($searchTerms)) {
+        if (0 === \count($searchTerms)) {
             return [];
         }
 
@@ -94,7 +96,7 @@ class PostRepository extends ServiceEntityRepository
      */
     private function sanitizeSearchQuery(string $query): string
     {
-        return preg_replace('/[^[:alnum:] ]/', '', trim(preg_replace('/[[:space:]]+/', ' ', $query)));
+        return trim(preg_replace('/[[:space:]]+/', ' ', $query));
     }
 
     /**
@@ -102,7 +104,7 @@ class PostRepository extends ServiceEntityRepository
      */
     private function extractSearchTerms(string $searchQuery): array
     {
-        $terms = array_unique(explode(' ', mb_strtolower($searchQuery)));
+        $terms = array_unique(explode(' ', $searchQuery));
 
         return array_filter($terms, function ($term) {
             return 2 <= mb_strlen($term);

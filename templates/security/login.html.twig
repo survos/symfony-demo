@@ -4,7 +4,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('build/js/login.js') }}"></script>
+    {{ encore_entry_script_tags('js/login') }}
 {% endblock %}
 
 {% block main %}
@@ -28,6 +28,7 @@
                             <label for="password">{{ 'label.password'|trans }}</label>
                             <input type="password" id="password" name="_password" class="form-control" />
                         </div>
+                        <input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}"/>
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
                         <button type="submit" class="btn btn-primary">
                             <i class="fa fa-sign-in" aria-hidden="true"></i> {{ 'action.sign_in'|trans }}
@@ -39,7 +40,7 @@
 
         <div id="login-help" class="col-sm-7">
             <h3>
-                <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+                <i class="hidden-xs fa fa-long-arrow-left" aria-hidden="true"></i>
                 {{ 'help.login_users'|trans }}
             </h3>
 

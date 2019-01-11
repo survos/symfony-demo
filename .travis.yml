@@ -4,16 +4,17 @@ sudo: false
 cache:
   directories:
     - $HOME/.composer/cache/files
-    - $HOME/symfony-bridge/.phpunit
+    - ./bin/.phpunit
 
 env:
   global:
-    - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
+    - SYMFONY_PHPUNIT_DIR=./bin/.phpunit
+    - SYMFONY_DEPRECATIONS_HELPER=29
 
 matrix:
   fast_finish: true
   include:
-    - php: 7.1
+    - php: 7.1.18
     - php: 7.2
     - php: nightly
   allow_failures:
@@ -28,9 +29,10 @@ install:
   - composer install
   - ./bin/console server:start
   - ./vendor/bin/codecept build
+  - ./bin/phpunit install
 
 script:
-  - ./vendor/bin/simple-phpunit
+  - ./bin/phpunit
   # this checks that the source code follows the Symfony Code Syntax rules
   - ./vendor/bin/php-cs-fixer fix --diff --dry-run -v
   # this checks that the YAML config files contain no syntax errors
@@ -47,3 +49,6 @@ script:
 after_success:
   - bash <(curl -s https://codecov.io/bash)
   - ./vendor/bin/codecept run
+  - ./bin/console security:check
+  # this checks that Doctrine's mapping configurations are valid
+  - ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction

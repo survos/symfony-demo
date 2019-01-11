@@ -6,42 +6,49 @@
     "require": {
         "php": "^7.1.3",
         "ext-pdo_sqlite": "*",
-        "doctrine/doctrine-fixtures-bundle": "^3.0",
+        "codeception/codeception": "^2.5",
+        "dama/doctrine-test-bundle": "^5.0",
+        "doctrine/doctrine-bundle": "^1.6.10",
+        "doctrine/doctrine-migrations-bundle": "^1.3",
+        "doctrine/orm": "^2.5.11",
         "erusev/parsedown": "^1.6",
         "ezyang/htmlpurifier": "^4.9",
-        "sensio/framework-extra-bundle": "^5.0",
-        "sensiolabs/security-checker": "^4.1",
-        "symfony/asset": "^4.0",
-        "symfony/expression-language": "^4.0",
-        "symfony/flex": "^1.0",
-        "symfony/form": "^4.0",
-        "symfony/framework-bundle": "^4.0",
+        "sensio/framework-extra-bundle": "^5.1",
+        "sensiolabs/security-checker": "^5.0",
+        "symfony/asset": "*",
+        "symfony/debug-bundle": "^4.0",
+        "symfony/dotenv": "^4.0",
+        "symfony/expression-language": "*",
+        "symfony/flex": "^1.1",
+        "symfony/form": "*",
+        "symfony/framework-bundle": "*",
         "symfony/monolog-bundle": "^3.1",
-        "symfony/orm-pack": "^1.0",
-        "symfony/polyfill-apcu": "^1.5",
-        "symfony/security-bundle": "^4.0",
+        "symfony/polyfill-php72": "^1.8",
+        "symfony/profiler-pack": "^1.0",
+        "symfony/security-bundle": "*",
         "symfony/swiftmailer-bundle": "^3.1",
         "symfony/translation": "^4.0",
         "symfony/validator": "^4.0",
-        "symfony/yaml": "^4.0",
-        "symfony/debug-bundle": "^4.0",        
-        "symfony/web-server-bundle": "^4.0",       
         "symfony/web-profiler-bundle": "^4.0",
-        "symfony/profiler-pack": "^1.0",        
+        "symfony/web-server-bundle": "^4.0",
+        "symfony/webpack-encore-bundle": "^1.0",
+        "symfony/yaml": "^4.0",
         "twig/extensions": "^1.5",
-        "symfony/dotenv": "^4.0",        
-        "dama/doctrine-test-bundle": "^4.0",        
         "twig/twig": "^2.4",
-        "white-october/pagerfanta-bundle": "^1.1"
+        "white-october/pagerfanta-bundle": "^1.1|^2"
     },
     "require-dev": {
-        "codeception/codeception": "2.3.x-dev",
-        "friendsofphp/php-cs-fixer": "^2.7",
-        "symfony/browser-kit": "^4.0",
-        "symfony/css-selector": "^4.0",
-        "symfony/phpunit-bridge": "^4.0",
-        "symfony/var-dumper": "^4.0",
-        "vlucas/phpdotenv": "^2.4"
+        "dama/doctrine-test-bundle": "^5.0",
+        "doctrine/doctrine-fixtures-bundle": "^3.0",
+        "friendsofphp/php-cs-fixer": "^2.12",
+        "symfony/browser-kit": "*",
+        "symfony/css-selector": "*",
+        "symfony/debug-bundle": "*",
+        "symfony/dotenv": "*",
+        "symfony/phpunit-bridge": "*",
+        "symfony/stopwatch": "*",
+        "symfony/web-profiler-bundle": "*",
+        "symfony/web-server-bundle": "*"
     },
     "config": {
         "platform": {
@@ -67,15 +74,21 @@
             "cache:clear": "symfony-cmd",
             "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd",
             "security-checker security:check": "script"
-        }
+        },
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ]
     },
     "conflict": {
         "symfony/symfony": "*"
     },
     "extra": {
         "symfony": {
-            "id": "01BY8QJHBGTYRP06WQFNY99EKP",
-            "allow-contrib": true
+            "allow-contrib": true,
+            "require": "4.2.*"
         }
     }
 }

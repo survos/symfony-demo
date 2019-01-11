@@ -13,8 +13,7 @@ namespace App\Tests\Form\DataTransformer;
 
 use App\Entity\Tag;
 use App\Form\DataTransformer\TagArrayToStringTransformer;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityRepository;
+use App\Repository\TagRepository;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -103,37 +102,23 @@ class TagArrayToStringTransformerTest extends TestCase
      * simplify the tests. See https://phpunit.de/manual/current/en/test-doubles.html.
      *
      * @param array $findByReturnValues The values returned when calling to the findBy() method
-     *
-     * @return TagArrayToStringTransformer
      */
     private function getMockedTransformer(array $findByReturnValues = []): TagArrayToStringTransformer
     {
-        $tagRepository = $this->getMockBuilder(EntityRepository::class)
+        $tagRepository = $this->getMockBuilder(TagRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
         $tagRepository->expects($this->any())
             ->method('findBy')
             ->will($this->returnValue($findByReturnValues));
 
-        $entityManager = $this
-            ->getMockBuilder(ObjectManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $entityManager->expects($this->any())
-            ->method('getRepository')
-            ->will($this->returnValue($tagRepository));
-
-        return new TagArrayToStringTransformer($entityManager);
+        return new TagArrayToStringTransformer($tagRepository);
     }
 
     /**
      * This helper method creates a Tag instance for the given tag name.
-     *
-     * @param string $name
-     *
-     * @return Tag
      */
-    private function createTag($name): Tag
+    private function createTag(string $name): Tag
     {
         $tag = new Tag();
         $tag->setName($name);

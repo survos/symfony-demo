@@ -16,7 +16,7 @@ Below goes official README of Symfony Demo Application:
 ---
 
 The "Symfony Demo Application" is a reference application created to show how
-to develop Symfony applications following the recommended best practices.
+to develop applications following the [Symfony Best Practices][1].
 
 [![Build Status](https://travis-ci.org/symfony/symfony-demo.svg?branch=master)](https://travis-ci.org/symfony/symfony-demo)
 [![Coverage Status](https://coveralls.io/repos/github/survos/symfony-demo/badge.svg?branch=master)](https://coveralls.io/github/survos/symfony-demo?branch=master)
@@ -26,33 +26,38 @@ Requirements
 
   * PHP 7.1.3 or higher;
   * PDO-SQLite PHP extension enabled;
-  * and the [usual Symfony application requirements][1].
+  * and the [usual Symfony application requirements][2].
 
 Installation
 ------------
 
-Execute this command to install the project:
+Install the [Symfony client][4] binary and run this command:
 
 ```bash
-$ composer create-project symfony/symfony-demo
+$ symfony new --demo my_project
 ```
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+Alternatively, you can use Composer:
+
+```bash
+$ composer create-project symfony/symfony-demo my_project
+```
 
 Usage
 -----
 
-There's no need to configure anything to run the application. Just execute this
-command to run the built-in web server and access the application in your
-browser at <http://localhost:8000>:
+There's no need to configure anything to run the application. If you have
+installed the [Symfony client][4] binary, run this command to run the built-in
+web server and access the application in your browser at <http://localhost:8000>:
 
 ```bash
-$ cd symfony-demo/
-$ php bin/console server:run
+$ cd my_project/
+$ symfony serve
 ```
 
-Alternatively, you can [configure a fully-featured web server][2] like Nginx
-or Apache to run the application.
+If you don't have the Symfony client installed, run `php bin/console server:run`.
+Alternatively, you can [configure a web server][3] like Nginx or Apache to run
+the application.
 
 Tests
 -----
@@ -60,9 +65,11 @@ Tests
 Execute this command to run tests:
 
 ```bash
-$ cd symfony-demo/
-$ ./vendor/bin/simple-phpunit
+$ cd my_project/
+$ ./bin/phpunit
 ```
 
-[1]: https://symfony.com/doc/current/reference/requirements.html
-[2]: https://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html
+[1]: https://symfony.com/doc/current/best_practices/index.html
+[2]: https://symfony.com/doc/current/reference/requirements.html
+[3]: https://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html
+[4]: https://symfony.com/download

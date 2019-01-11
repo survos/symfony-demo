@@ -16,16 +16,16 @@ use App\Entity\Post;
 use App\Events;
 use App\Form\CommentType;
 use App\Repository\PostRepository;
+use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller used to manage blog contents in the public part of the site.
@@ -38,19 +38,22 @@ use Symfony\Component\HttpFoundation\Response;
 class BlogController extends AbstractController
 {
     /**
-     * @Route("/", defaults={"page": "1", "_format"="html"}, name="blog_index")
-     * @Route("/rss.xml", defaults={"page": "1", "_format"="xml"}, name="blog_rss")
-     * @Route("/page/{page}", defaults={"_format"="html"}, requirements={"page": "[1-9]\d*"}, name="blog_index_paginated")
-     * @Method("GET")
+     * @Route("/", defaults={"page": "1", "_format"="html"}, methods={"GET"}, name="blog_index")
+     * @Route("/rss.xml", defaults={"page": "1", "_format"="xml"}, methods={"GET"}, name="blog_rss")
+     * @Route("/page/{page<[1-9]\d*>}", defaults={"_format"="html"}, methods={"GET"}, name="blog_index_paginated")
      * @Cache(smaxage="10")
      *
      * NOTE: For standard formats, Symfony will also automatically choose the best
      * Content-Type header for the response.
      * See https://symfony.com/doc/current/quick_tour/the_controller.html#using-formats
      */
-    public function index(int $page, string $_format, PostRepository $posts): Response
+    public function index(Request $request, int $page, string $_format, PostRepository $posts, TagRepository $tags): Response
     {
-        $latestPosts = $posts->findLatest($page);
+        $tag = null;
+        if ($request->query->has('tag')) {
+            $tag = $tags->findOneBy(['name' => $request->query->get('tag')]);
+        }
+        $latestPosts = $posts->findLatest($page, $tag);
 
         // Every template name also has two extensions that specify the format and
         // engine for that template.
@@ -59,8 +62,7 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/posts/{slug}", name="blog_post")
-     * @Method("GET")
+     * @Route("/posts/{slug}", methods={"GET"}, name="blog_post")
      *
      * NOTE: The $post controller argument is automatically injected by Symfony
      * after performing a database query looking for a Post with the 'slug'
@@ -80,9 +82,8 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/comment/{postSlug}/new", name="comment_new")
-     * @Method("POST")
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Route("/comment/{postSlug}/new", methods={"POST"}, name="comment_new")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @ParamConverter("post", options={"mapping": {"postSlug": "slug"}})
      *
      * NOTE: The ParamConverter mapping is required because the route parameter
@@ -145,8 +146,7 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/search", name="blog_search")
-     * @Method("GET")
+     * @Route("/search", methods={"GET"}, name="blog_search")
      */
     public function search(Request $request, PostRepository $posts): Response
     {
@@ -161,10 +161,10 @@ class BlogController extends AbstractController
         $results = [];
         foreach ($foundPosts as $post) {
             $results[] = [
-                'title' => htmlspecialchars($post->getTitle()),
+                'title' => htmlspecialchars($post->getTitle(), ENT_COMPAT | ENT_HTML5),
                 'date' => $post->getPublishedAt()->format('M d, Y'),
-                'author' => htmlspecialchars($post->getAuthor()->getFullName()),
-                'summary' => htmlspecialchars($post->getSummary()),
+                'author' => htmlspecialchars($post->getAuthor()->getFullName(), ENT_COMPAT | ENT_HTML5),
+                'summary' => htmlspecialchars($post->getSummary(), ENT_COMPAT | ENT_HTML5),
                 'url' => $this->generateUrl('blog_post', ['slug' => $post->getSlug()]),
             ];
         }
