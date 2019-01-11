@@ -2,44 +2,26 @@
 
 <!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.1/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.5/phpunit.xsd"
          backupGlobals="false"
          colors="true"
          bootstrap="config/bootstrap.php"
 >
     <php>
         <ini name="error_reporting" value="-1" />
-        <env name="KERNEL_CLASS" value="App\Kernel" />
-        <env name="SYMFONY_PHPUNIT_VERSION" value="7.1"/>
-        <env name="APP_ENV" value="test"/>
+        <env name="APP_ENV" value="test" />
+        <env name="SHELL_VERBOSITY" value="-1" />
     </php>
 
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>tests/</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
 
-    <listeners>
-        <!-- it begins a database transaction before every testcase and rolls it back after
-             the test finished, so tests can manipulate the database without affecting other tests
-        <listener class="\DAMA\DoctrineTestBundle\PHPUnit\LegacyPHPUnitListener" />
-              -->
-        <listener class="\DAMA\DoctrineTestBundle\PHPUnit\PHPUnitListener" />
-    </listeners>
-    <logging>
-        <log type="coverage-clover" target="./coverage.xml"/>
-    </logging>
-    <!-- filter section is for code coverage -->
     <filter>
         <whitelist>
-            <directory>./src</directory>
-            <exclude>
-                <directory>./src/*Bundle/Resources</directory>
-                <directory>./src/*Bundle/Tests</directory>
-                <directory>./src/*/*Bundle/Resources</directory>
-                <directory>./src/*/*Bundle/Tests</directory>
-            </exclude>
+            <directory>src</directory>
         </whitelist>
     </filter>
 </phpunit>

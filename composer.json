@@ -47,6 +47,7 @@
         "symfony/dotenv": "*",
         "symfony/phpunit-bridge": "*",
         "symfony/stopwatch": "*",
+        "symfony/test-pack": "^1.0",
         "symfony/web-profiler-bundle": "*",
         "symfony/web-server-bundle": "*"
     },
