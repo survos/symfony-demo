@@ -107,7 +107,7 @@ class BlogController extends AbstractController
     /**
      * @Route("/comment/{postSlug}/new", methods={"POST"}, name="comment_new")
      * @IsGranted("IS_AUTHENTICATED_FULLY")
-     * @ ParamConverter("post", options={"mapping": {"postSlug": "slug"}})
+     * @  ParamConverter("post", options={"mapping": {"postSlug": "slug"}})
      *
      * NOTE: The ParamConverter mapping is required because the route parameter
      * (postSlug) doesn't match any of the Doctrine entity properties (slug).
