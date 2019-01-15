@@ -8,7 +8,8 @@ We use official "Symfony Demo Application" to demonstrate basics of Codeception 
 ```
 composer install -n
 php bin/console doctrine:fixtures:load -n --env test
-php bin/codecept run
+php bin/console server:start
+php vendor/bin/codecept run
 ```
 
 Below goes official README of Symfony Demo Application:
