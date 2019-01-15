@@ -82,6 +82,27 @@ class BlogController extends AbstractController
     }
 
     /**
+     * @Route("/posts/{postSlug}", methods={"GET"}, name="blog_post_bug")
+     *
+     * NOTE: The $post controller argument is automatically injected by Symfony
+     * after performing a database query looking for a Post with the 'slug'
+     * value given in the route.
+     * See https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+     */
+    public function postShowBug(Post $post): Response
+    {
+        // Symfony's 'dump()' function is an improved version of PHP's 'var_dump()' but
+        // it's not available in the 'prod' environment to prevent leaking sensitive information.
+        // It can be used both in PHP files and Twig templates, but it requires to
+        // have enabled the DebugBundle. Uncomment the following line to see it in action:
+        //
+        // dump($post, $this->getUser(), new \DateTime());
+
+        return $this->render('blog/post_show.html.twig', ['post' => $post]);
+    }
+
+
+    /**
      * @Route("/comment/{postSlug}/new", methods={"POST"}, name="comment_new")
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @   ParamConverter("post", options={"mapping": {"postSlug": "slug"}})

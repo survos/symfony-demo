@@ -9,7 +9,9 @@
                 <a href="{{ path('blog_post', {slug: post.slug}) }}">
                     {{ post.title }}
                 </a>
+
             </h2>
+            <a href="{{ path('blog_post_bug', {postSlug: post.slug }) }}"> <i class="fa fa-bug btn btn-danger btn-sm"> ParamConverter Bug</i> </a>
 
             <p class="post-metadata">
                 <span class="metadata"><i class="fa fa-calendar"></i> {{ post.publishedAt|localizeddate('long', 'medium', null, 'UTC') }}</span>

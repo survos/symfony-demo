@@ -60,7 +60,7 @@ class PostParamConverter implements ParamConverterInterface
         $repository = $em->getRepository($configuration->getClass());
 
         // Try to find project by its slug
-        $post = $repository->find(['slug' => $postSlug]);
+        $post = $repository->findOneBy(['slug' => $postSlug]);
 
         if (null === $post || !($post instanceof Post)) {
             throw new NotFoundHttpException(sprintf('%s object not found.', $configuration->getClass()));
