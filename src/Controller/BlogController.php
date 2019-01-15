@@ -82,7 +82,7 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/posts/{postSlug}", methods={"GET"}, name="blog_post_bug")
+     * @Route("/bug-posts/{postSlug}", methods={"GET"}, name="blog_post_bug")
      *
      * NOTE: The $post controller argument is automatically injected by Symfony
      * after performing a database query looking for a Post with the 'slug'
