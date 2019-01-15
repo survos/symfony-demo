@@ -85,8 +85,10 @@ class BlogController extends AbstractController
      * @Route("/bug-posts/{postSlug}", methods={"GET"}, name="blog_post_bug")
      *
      * NOTE: The $post controller argument is automatically injected by Symfony
-     * after performing a database query looking for a Post with the 'slug'
+     * after performing a database query looking for a Post with the 'postSlug'
      * value given in the route.
+     *
+     * See src/Request/ParamConverter/PostParamConverter.php
      * See https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
      */
     public function postShowBug(Post $post): Response
