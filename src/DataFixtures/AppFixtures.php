@@ -141,6 +141,7 @@ class AppFixtures extends Fixture
     private function getPhrases(): array
     {
         return [
+            'Test Post To Demonstrate Bug',
             'Lorem ipsum dolor sit amet consectetur adipiscing elit',
             'Pellentesque vitae velit ex',
             'Mauris dapibus risus quis suscipit vulputate',
