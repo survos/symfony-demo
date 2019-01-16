@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a8a170d6d89d8b680852a3415f008018",
+    "content-hash": "97c7a120b3ee38602e8951eea9cf6455",
     "packages": [
         {
             "name": "behat/gherkin",
@@ -4453,16 +4453,16 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v4.2.2",
+            "version": "4.2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "a28dda9df1d5494367454cad91e44751ac53921c"
+                "reference": "ae3a78972bedf11fa10b45b624de4b9c0bc65201"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/a28dda9df1d5494367454cad91e44751ac53921c",
-                "reference": "a28dda9df1d5494367454cad91e44751ac53921c",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/ae3a78972bedf11fa10b45b624de4b9c0bc65201",
+                "reference": "ae3a78972bedf11fa10b45b624de4b9c0bc65201",
                 "shasum": ""
             },
             "require": {
@@ -4522,7 +4522,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-05T16:37:49+00:00"
+            "time": "2019-01-16T09:27:29+00:00"
         },
         {
             "name": "symfony/doctrine-bridge",
@@ -8328,7 +8328,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "symfony/dependency-injection": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
