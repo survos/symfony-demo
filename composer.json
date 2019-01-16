@@ -17,6 +17,7 @@
         "symfony/asset": "*",
         "symfony/console": "*",
         "symfony/debug-bundle": "^4.0",
+        "symfony/dependency-injection": "4.2.x-dev#e4adc57a48d3fa7f394edfffa9e954086d7740e5",
         "symfony/dotenv": "^4.0",
         "symfony/expression-language": "*",
         "symfony/flex": "^1.1",
